@@ -1,46 +1,37 @@
-from bottle import route,run,template,view,static_file,get, post, request,default_app
-import requests
+# -*- coding: UTF-8 -*-
+from bottle import route,run,template,view,static_file,get, post, request,response,default_app
 import os
 import json
 from bottle import TEMPLATE_PATH
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from oauth2client.tools import argparser
-#TEMPLATE_PATH.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi/views/')) 
+from functions import busqueda_g, busqueda_next
 
-#from oauth2client.client import flow_from_clientsecrets
 API_KEY = 'AIzaSyDdIpBtl23FbaOSOGz7YwsyViA5jIhpNZ4'
 
 @route('/')
 def index():
 	return  template('index.tpl')
 	
-
-
-@route('/buscar')
-@view('buscar')
-def buscar():
-	return 
-
+#Enrutador a la ruta estática
 @route('/static/:path#.+#', name='static')
 def static(path):
     return static_file(path, root='static')
 
+@route('/buscar')
+@view('buscar')
+def buscar():
+	return
 
-
-# This must be added in order to do correct path lookups for the views
-
-#import busqueda
-@route('/Busqueda', method='POST')
-@view('ejemplo')
+@route('/resultBus', method='POST')
+@view('resultBus')
 def busqueda():
 	busqueda = request.forms.get('buscar')
 	opciones = request.forms.getlist('opciones')
-	query_part = {'part':["id,snippet"],'type':opciones,'q':busqueda,'key':API_KEY}
-	request_mont = requests.get('https://www.googleapis.com/youtube/v3/search',params=query_part)
-	jresp = json.loads(request_mont.text,object_pairs_hook=dict)
-	print jresp
-	return jresp
+	response.set_cookie("busqueda", busqueda,path="/")
+	response.set_cookie("result_index",str(0),path="/")
+	return busqueda_g(busqueda,opciones)
 '''	q_sf = {'id':"7lCDEYXw3mM",'key':"AIzaSyDdIpBtl23FbaOSOGz7YwsyViA5jIhpNZ4",'part':["snippet","contentDetails","statistics","status"]}
 	r_sf = requests.get('https://www.googleapis.com/youtube/v3/videos',params=q_sf)
 	jresp = json.loads(r_sf.text,object_pairs_hook=dict)
@@ -53,7 +44,24 @@ def busqueda():
 def enlaceVideo(id): 
   return dict(video=id)
 
+@route('/nextPage/<pageid>')
+@view('resultBus')
+def nexPage(pageid):
+	busqueda = request.get_cookie("busqueda")
+	result_index=int(request.cookies.get("result_index"))
+	result_index += 25
+	response.set_cookie("result_index",str(result_index),path="/")
+	return busqueda_next(busqueda,pageid,result_index)
 
+@route('/prevPage/<pageid>')
+@view('resultBus')
+def nexPage(pageid):
+	busqueda = request.get_cookie("busqueda")
+	result_index=int(request.cookies.get("result_index"))
+	if result_index > 0:
+		result_index -= 25
+	response.set_cookie("result_index",str(result_index),path="/")
+	return busqueda_next(busqueda,pageid,result_index)
 
 
 ON_OPENSHIFT = False
