@@ -7,6 +7,7 @@ def busqueda_g(busqueda,opciones):
 	query_part = {'part':["id,snippet"],'type':opciones,'maxResults':25,'q':busqueda,'key':API_KEY}
 	request_mont = requests.get('https://www.googleapis.com/youtube/v3/search',params=query_part)
 	jresp = json.loads(request_mont.text)
+	jresp["numPag"]= 25
 	return jresp
 
 def	busqueda_next(busqueda,pageid,result_index):
@@ -15,3 +16,5 @@ def	busqueda_next(busqueda,pageid,result_index):
 	jresp = json.loads(request_mont.text)
 	jresp["numPag"]=result_index
 	return jresp
+
+
