@@ -17,4 +17,10 @@ def	busqueda_next(busqueda,pageid,result_index):
 	jresp["numPag"]=result_index
 	return jresp
 
+def getVideoStats(id):
+	query_part = {'part':["snippet,contentDetails,statistics"],"id":id,'key':API_KEY}
+	request_mont = requests.get('https://www.googleapis.com/youtube/v3/videos',params=query_part)
+	jresp = json.loads(request_mont.text)
+	return jresp
+
 
