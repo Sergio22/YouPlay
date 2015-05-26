@@ -6,7 +6,7 @@ from bottle import TEMPLATE_PATH
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from oauth2client.tools import argparser
-from functions import busqueda_g, busqueda_next
+from functions import busqueda_g, busqueda_next,getVideoStats
 
 API_KEY = 'AIzaSyDdIpBtl23FbaOSOGz7YwsyViA5jIhpNZ4'
 
@@ -30,7 +30,7 @@ def busqueda():
 	busqueda = request.forms.get('buscar')
 	opciones = request.forms.getlist('opciones')
 	response.set_cookie("busqueda", busqueda,path="/")
-	response.set_cookie("result_index",str(0),path="/")
+	response.set_cookie("result_index",str(25),path="/")
 	return busqueda_g(busqueda,opciones)
 '''	q_sf = {'id':"7lCDEYXw3mM",'key':"AIzaSyDdIpBtl23FbaOSOGz7YwsyViA5jIhpNZ4",'part':["snippet","contentDetails","statistics","status"]}
 	r_sf = requests.get('https://www.googleapis.com/youtube/v3/videos',params=q_sf)
@@ -71,6 +71,9 @@ def defaultBus():
 	response.set_cookie("result_index",str(25),path="/")
 	return busqueda_g(busqueda,opciones)
 
+@route('/getVideoStatics/<id>')
+def getVideoStatics(id): 
+	return getVideoStats(id)
 
 ON_OPENSHIFT = False
 if os.environ.has_key('OPENSHIFT_REPO_DIR'):
