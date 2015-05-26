@@ -63,6 +63,14 @@ def nexPage(pageid):
 	response.set_cookie("result_index",str(result_index),path="/")
 	return busqueda_next(busqueda,pageid,result_index)
 
+@route('/busquedaDefault')
+@view('resultBus')
+def defaultBus():
+	busqueda = ""
+	opciones = ["videos"]
+	response.set_cookie("result_index",str(25),path="/")
+	return busqueda_g(busqueda,opciones)
+
 
 ON_OPENSHIFT = False
 if os.environ.has_key('OPENSHIFT_REPO_DIR'):
