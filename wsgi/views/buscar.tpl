@@ -1,5 +1,6 @@
 % include('header.tpl', title='YouPlay')
 <div class="jumbotron text-center"> 
+  <body background="http://mayankagrawal.com/media/play_button.png">
     <h1>Bienvenidos A YouPlay!!</h1>
     <h3> Por favor, introduce el nombre de tu vídeo favorito:</h3>
     

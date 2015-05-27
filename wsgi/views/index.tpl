@@ -1,4 +1,7 @@
 % include('header.tpl', title='YouPlay')
+<html>
+
+<body background="http://mayankagrawal.com/media/play_button.png">
    <div class="jumbotron text-center"> 
     <h1><u><strong>Bienvenidos A YouPlay!!</strong></u></h1>
     <br></br>
@@ -14,7 +17,8 @@
     </a>
 </div>
 </div>
-
+</body>
+</html>
 
 
 % include('footer.tpl')
