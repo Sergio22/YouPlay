@@ -1,5 +1,5 @@
 % include('header.tpl', title='YouPlay')
-
+<body background="http://mayankagrawal.com/media/play_button.png">
 <script>
 
 function llamardatos(id){
@@ -25,13 +25,13 @@ function llamardatos(id){
   //  
 });
 </script>
-<h1>Resultados de la b&uacute;squeda:</h1>
+<h1><font color= red>Resultados de la b&uacute;squeda:</font color></h1>
 
 
-<h2>Videos:</h2>
+<h2><font color= blue>Videos:</font color></h2>
 %if 'numPag' in vars():
 %if int(numPag)>0:
-	<p> Mostrando resultados {{numPag-24}} - {{numPag}} de {{pageInfo['totalResults']}} resultados </p>
+	<p><font color= blue> Mostrando resultados {{numPag-24}} - {{numPag}} de {{pageInfo['totalResults']}} resultados </font color></p>
 %else:
 <p> Se han encontrado {{pageInfo['totalResults']}} resultados </p>
 %end
@@ -66,7 +66,7 @@ function llamardatos(id){
 </div>
 % end
 % end
-<h2>Canales:</h2>
+<h2><font color= blue>Canales:</font color></h2>
 % for item in items:
 %if item["id"]["kind"] == "youtube#channel":
 <div class="panel panel-primary">
@@ -82,7 +82,7 @@ function llamardatos(id){
 </div>
 % end
 % end
-<h2>Listas de reproducción:</h2>
+<h2><font color= blue>Listas de reproducción:</font color></h2>
 % for item in items:
 %if item["id"]["kind"] == "youtube#playlist":
 <div class="panel panel-primary">
@@ -104,4 +104,4 @@ function llamardatos(id){
 % else:
 <a class="btn btn-primary disabled" href="">Resultados anteriores</a>
 % end
-% include('footer.tpl')s
+% include('footer.tpl')
