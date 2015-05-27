@@ -84,5 +84,3 @@ if ON_OPENSHIFT:
 else:
 	run(host='localhost', port=8080)
 
-
-

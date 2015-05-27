@@ -31,7 +31,7 @@ function llamardatos(id){
 <h2><font color= blue>Videos:</font color></h2>
 %if 'numPag' in vars():
 %if int(numPag)>0:
-	<p><font color= lime> Mostrando resultados {{numPag-24}} - {{numPag}} de {{pageInfo['totalResults']}} resultados </font color></p>
+	<p><font color= blue> Mostrando resultados {{numPag-24}} - {{numPag}} de {{pageInfo['totalResults']}} resultados </font color></p>
 %else:
 <p> Se han encontrado {{pageInfo['totalResults']}} resultados </p>
 %end
