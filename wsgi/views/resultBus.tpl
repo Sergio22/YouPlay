@@ -6,8 +6,6 @@ function llamardatos(id){
 	$.get ("../getVideoStatics/"+id,function(data){
 		var info=data.items[0];
 	
-	
-
 		$('.Duracion').html(info.contentDetails.duration);
 		$('.Descripcion').html(info.snippet.description);
 	});
